@@ -1,0 +1,1523 @@
+AIM:
+1. To Develop an android application to display a simple text in the emulator
+Algorithm: 
+SOURCE CODE:
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity"
+ android:gravity="center"
+ android:orientation="vertical">
+ <TextView
+ android:id="@+id/text"
+ android:textSize="18sp"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content" />
+</LinearLayout>
+MainActivity.Java
+package com.lab.exp1;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+public class MainActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ TextView textView= (TextView) findViewById(R.id.text);
+ textView.setText("Welcome");
+ }
+}
+AIM:
+2 . To Develop an android application to display the internal keyboard in the emulator.
+Algorithm: 
+SOURCE CODE:
+Actitvity_main.XML
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:padding="16dp"
+ android:gravity="center"
+ tools:context="com.example.exp2.MainActivity">
+ <EditText
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:id="@+id/edit_text"
+ android:hint="Enter text"
+ android:padding="12dp"
+ android:singleLine="true"
+ android:imeOptions="actionDone"
+ android:background="@android:drawable/editbox_background"
+ />
+</RelativeLayout>
+MainActivity.Java
+package com.lab.exp2;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ EditText editText;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ 
+ editText =(EditText) findViewById(R.id.edit_text);
+ 
+ 
+getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_AL
+WAYS_VISIBLE);
+ 
+ showKeyboard(editText);
+ editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+ @Override
+ public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+ 
+ String s = editText.getText().toString().trim();
+ if(actionId == EditorInfo.IME_ACTION_DONE) {
+ hideKeyboard(editText);
+ Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+ return true;
+ }
+ return false;
+ }
+ });
+ }
+ private void hideKeyboard(EditText editText) {
+ InputMethodManager manager = (InputMethodManager) 
+getSystemService(Context.INPUT_METHOD_SERVICE);
+ 
+ manager.hideSoftInputFromWindow(editText.getApplicationWindowToken(),0);
+ }
+ private void showKeyboard(EditText editText){
+ 
+ InputMethodManager manager = 
+(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+ 
+manager.showSoftInput(editText.getRootView(),InputMethodManager.SHOW_IMPLICIT);
+ 
+ editText.requestFocus();
+ }
+ }
+3. A)To Write an android program to display a message in the toast
+SOURCE CODE:
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context="com.example.arun.expno3b.MainActivity">
+ <Button
+ android:id="@+id/button"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignParentTop="true"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="75dp"
+ android:text="Button" />
+</RelativeLayout>
+MainActivity.Java
+package com.example.arun.expno3b;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ Button btn;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ btn = (Button)findViewById(R.id.button);
+ btn.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ Toast.makeText(MainActivity.this,"Mobile App” 
+",Toast.LENGTH_LONG).show();
+ }
+ });
+ }
+}
+3b)
+Aim:
+To Write an android program to input a text through a text and the same must be displayed in the 
+toast when a button is clicked on the screen
+SOURCE CODE:
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context="com.example.arun.expno3a.MainActivity">
+ <EditText
+ android:id="@+id/editText"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:ems="10"
+ android:inputType="textPersonName"
+ android:layout_marginTop="50dp"
+ android:hint="Name"
+ tools:layout_editor_absoluteX="-55dp"
+ tools:layout_editor_absoluteY="16dp" />
+ <Button
+ android:id="@+id/button"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Button"
+ tools:layout_editor_absoluteX="31dp"
+ tools:layout_editor_absoluteY="160dp"
+ android:layout_below="@+id/editText"
+ android:layout_alignParentLeft="true"
+ android:layout_alignParentStart="true"
+ android:layout_marginTop="30dp" />
+</RelativeLayout>
+MainActivity.Java
+package com.example.arun.expno3b;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ Button btn;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ btn = (Button)findViewById(R.id.button);
+ btn.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ e1 = (EditText)findViewById(R.id.editText);
+ String message=e1.getText().toString();
+ Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG).show();
+ }
+ });
+ }
+}
+4a)
+AIM
+To Develop an application to perform 5 arithmetic operations: Addition, Subtraction, 
+Multiplication, Division and Modulo operation with necessary user interface creation.
+Activity_main.xml:
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:paddingBottom="@dimen/activity_vertical_margin"
+ android:paddingLeft="@dimen/activity_horizontal_margin"
+ android:paddingRight="@dimen/activity_horizontal_margin"
+ android:paddingTop="@dimen/activity_vertical_margin"
+ tools:context=".MainActivity" >
+ <EditText
+ android:id="@+id/editText1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@+id/textView1"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="48dp"
+ android:ems="10" >
+ <requestFocus />
+ </EditText>
+ <EditText
+ android:id="@+id/editText2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@+id/editText1"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="33dp"
+ android:ems="10" />
+ <Button
+ android:id="@+id/buttonsub"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignBaseline="@+id/buttonsum"
+ android:layout_alignBottom="@+id/buttonsum"
+ android:layout_alignRight="@+id/editText2"
+ android:text="buttonsub" />
+ <Button
+ android:id="@+id/buttonmul"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignBaseline="@+id/buttondiv"
+ android:layout_alignBottom="@+id/buttondiv"
+ android:layout_alignRight="@+id/buttonsum"
+ android:text="buttonmul" />
+ <TextView
+ android:id="@+id/textView1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignParentTop="true"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="22dp"
+ android:text="Arithmetic Operation" />
+ <Button
+ android:id="@+id/buttonsum"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@+id/editText2"
+ android:layout_marginLeft="15dp"
+ android:layout_marginTop="38dp"
+ android:text="buttonsum" />
+ <Button
+ android:id="@+id/buttondiv"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignRight="@+id/buttonsub"
+ android:layout_below="@+id/buttonsub"
+ android:text="buttondiv" />
+</RelativeLayout>
+MainActivity.java:
+package com.example.arithmetic;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+public class MainActivity extends Activity 
+{
+Button btnsum,btnsub,btndiv,btnmul;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ Button btnsum = (Button) findViewById(R.id.buttonsum);
+ Button btnsub = (Button) findViewById(R.id.buttonsub);
+ Button btndiv = (Button) findViewById(R.id.buttondiv);
+ Button btnmul = (Button) findViewById(R.id.buttonmul); 
+ final EditText etv = (EditText) findViewById(R.id.editText1);
+ final EditText etv2 = (EditText) findViewById(R.id.editText2);
+ final TextView result = (TextView) findViewById(R.id.textView1);
+ 
+btnsub.setOnClickListener(new OnClickListener() {
+public void onClick(View v) {
+int x = new Integer(etv.getText().toString());
+int y = new Integer(etv2.getText().toString());
+int sub = x - y; //Perform Maths operation
+result.setText("The ANS of " + x + " - " + y + " = " + sub);//print answer
+ }
+ });
+ 
+btndiv.setOnClickListener(new OnClickListener() {
+@Override
+public void onClick(View v) {
+int x = new Integer(etv.getText().toString());
+int y = new Integer(etv2.getText().toString());
+int div = x / y; //Perform Maths operation
+result.setText("The ANS of " + x + " / " + y + " = " + div);//print answer
+}
+ });
+ 
+btnmul.setOnClickListener(new OnClickListener() {
+@Override
+public void onClick(View v) {
+int x = new Integer(etv.getText().toString());
+int y = new Integer(etv2.getText().toString());
+int mul = x * y; //Perform Maths operation
+result.setText("The ANS of " + x + " * " + y + " = " + mul);//Print answer
+}
+});
+ 
+btnsum.setOnClickListener(new OnClickListener() {
+@Override
+public void onClick(View v) {
+int x = new Integer(etv.getText().toString());
+int y = new Integer(etv2.getText().toString());
+int sum = x + y; //Perform Maths operation
+result.setText("The ANS of " + x + " + " + y + " = " + sum);//Print answer
+}
+});
+}
+}
+4b)
+AIM: To Develop an android application to process a student mark list by creating proper UI 
+using the necessary controls
+SOURCE CODE:
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ tools:context="com.example.arun.exp4b.MainActivity">
+ <TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:gravity="center"
+ android:text="Student Mark Information"
+ android:textSize="30dp"
+ android:layout_marginTop="10dp"
+ android:textStyle="bold"
+ android:layout_marginBottom="20dp"
+ android:textColor="@color/colorPrimaryDark"
+ app:layout_constraintBottom_toBottomOf="parent" />
+ <EditText
+ android:id="@+id/name"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Name"
+ android:inputType="text"
+ android:maxLength="25"
+ android:textStyle="bold" />
+ <EditText
+ android:id="@+id/mark1"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:inputType="text"
+ android:hint="Enter Mark 1 "
+ android:layout_marginTop="5dp"
+ android:textStyle="bold"/>
+ <EditText
+ android:id="@+id/mark2"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:inputType="text"
+ android:hint="Enter Mark 2"
+ android:layout_marginTop="5dp"
+ android:textStyle="bold"/>
+ <Button
+ android:id="@+id/button1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Submit"
+ android:background="@color/colorAccent"
+ android:layout_marginTop="15dp"
+ android:layout_gravity="center"/>
+ <TextView
+ android:id="@+id/resultText"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:gravity="left"
+ android:layout_marginTop="10dp"
+ android:textStyle="bold"
+ android:textSize="30dp"
+ android:layout_marginBottom="20dp"
+ android:textColor="@color/colorPrimary" />
+</LinearLayout>
+MainActivity.Java
+package com.example.arun.exp4b;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import org.w3c.dom.Text;
+public class MainActivity extends AppCompatActivity {
+ private EditText stdName,m1,m2;
+ private Button btn;
+ private TextView tv;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ stdName = (EditText)findViewById(R.id.name);
+ m1 = (EditText)findViewById(R.id.mark1);
+ m2 = (EditText)findViewById(R.id.mark2);
+ btn = (Button)findViewById(R.id.button1);
+ tv = (TextView)findViewById(R.id.resultText);
+ btn.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String name = stdName.getText().toString();
+ String mOne = m1.getText().toString();
+ String mTwo = m2.getText().toString();
+ tv.setText("Name:"+ name +"\nMark1:"+ mOne+ "\nMark2:"+ mTwo);
+ }
+ });
+ }
+}
+5). Write an android application to create a calculator
+AIM:
+To Write an android application to create a calculator
+Activity_Main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context="com.example.arun.calculator.MainActivity">
+ <EditText
+ android:id="@+id/edt1"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content" />
+ <Button
+ android:id="@+id/button1"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignEnd="@+id/button4"
+ android:layout_alignRight="@+id/button4"
+ android:layout_below="@+id/edt1"
+ android:layout_marginTop="94dp"
+ android:text="1" />
+ <Button
+ android:id="@+id/button2"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignTop="@+id/button1"
+ android:layout_toLeftOf="@+id/button3"
+ android:layout_toStartOf="@+id/button3"
+ android:text="2" />
+ <Button
+ android:id="@+id/button3"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignTop="@+id/button2"
+ android:layout_centerHorizontal="true"
+ android:text="3" />
+ <Button
+ android:id="@+id/button4"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@+id/button1"
+ android:layout_toLeftOf="@+id/button2"
+ android:text="4" />
+ <Button
+ android:id="@+id/button5"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignBottom="@+id/button4"
+ android:layout_alignLeft="@+id/button2"
+ android:layout_alignStart="@+id/button2"
+ android:text="5" />
+ <Button
+ android:id="@+id/button6"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignLeft="@+id/button3"
+ android:layout_alignStart="@+id/button3"
+ android:layout_below="@+id/button3"
+ android:text="6" />
+ <Button
+ android:id="@+id/button7"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@+id/button4"
+ android:layout_toLeftOf="@+id/button2"
+ android:text="7" />
+ <Button
+ android:id="@+id/button8"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignLeft="@+id/button5"
+ android:layout_alignStart="@+id/button5"
+ android:layout_below="@+id/button5"
+ android:text="8" />
+ <Button
+ android:id="@+id/button9"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignLeft="@+id/button6"
+ android:layout_alignStart="@+id/button6"
+ android:layout_below="@+id/button6"
+ android:text="9" />
+ <Button
+ android:id="@+id/buttonadd"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignEnd="@+id/edt1"
+ android:layout_alignRight="@+id/edt1"
+ android:layout_alignTop="@+id/button3"
+ android:layout_marginLeft="46dp"
+ android:layout_marginStart="46dp"
+ android:layout_toRightOf="@+id/button3"
+ android:text="+" />
+ <Button
+ android:id="@+id/buttonsub"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignEnd="@+id/buttonadd"
+ android:layout_alignLeft="@+id/buttonadd"
+ android:layout_alignRight="@+id/buttonadd"
+ android:layout_alignStart="@+id/buttonadd"
+ android:layout_below="@+id/buttonadd"
+ android:text="-" />
+ <Button
+ android:id="@+id/buttonmul"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignLeft="@+id/buttonsub"
+ android:layout_alignParentEnd="true"
+ android:layout_alignParentRight="true"
+ android:layout_alignStart="@+id/buttonsub"
+ android:layout_below="@+id/buttonsub"
+ android:text="*" />
+ <Button
+ android:id="@+id/button10"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_below="@+id/button7"
+ android:layout_toLeftOf="@+id/button2"
+ android:text="." />
+ <Button
+ android:id="@+id/button0"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignLeft="@+id/button8"
+ android:layout_alignStart="@+id/button8"
+ android:layout_below="@+id/button8"
+ android:text="0" />
+ <Button
+ android:id="@+id/buttonC"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignLeft="@+id/button9"
+ android:layout_alignStart="@+id/button9"
+ android:layout_below="@+id/button9"
+ android:text="C" />
+ <Button
+ android:id="@+id/buttondiv"
+ style="?android:attr/buttonStyleSmall"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignEnd="@+id/buttonmul"
+ android:layout_alignLeft="@+id/buttonmul"
+ android:layout_alignRight="@+id/buttonmul"
+ android:layout_alignStart="@+id/buttonmul"
+ android:layout_below="@+id/buttonmul"
+ android:text="/" />
+ <Button
+ android:id="@+id/buttoneql"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignEnd="@+id/buttondiv"
+ android:layout_alignLeft="@+id/button10"
+ android:layout_alignRight="@+id/buttondiv"
+ android:layout_alignStart="@+id/button10"
+ android:layout_below="@+id/button0"
+ android:layout_marginTop="37dp"
+ android:text="=" />
+</RelativeLayout>
+MainActivity.java
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.view.View;
+public class MainActivity extends AppCompatActivity {
+ Button button0, button1, button2, button3, button4, button5, button6,
+ button7, button8, button9, buttonAdd, buttonSub, buttonDivision,
+ buttonMul, button10, buttonC, buttonEqual;
+ EditText calciEditText;
+ float mValueOne, mValueTwo;
+ boolean cAddition, cSubtract, cMultiplication, cDivision;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ button0 = (Button) findViewById(R.id.button0);
+ button1 = (Button) findViewById(R.id.button1);
+ button2 = (Button) findViewById(R.id.button2);
+ button3 = (Button) findViewById(R.id.button3);
+ button4 = (Button) findViewById(R.id.button4);
+ button5 = (Button) findViewById(R.id.button5);
+ button6 = (Button) findViewById(R.id.button6);
+ button7 = (Button) findViewById(R.id.button7);
+ button8 = (Button) findViewById(R.id.button8);
+ button9 = (Button) findViewById(R.id.button9);
+ button10 = (Button) findViewById(R.id.button10);
+ buttonAdd = (Button) findViewById(R.id.buttonadd);
+ buttonSub = (Button) findViewById(R.id.buttonsub);
+ buttonMul = (Button) findViewById(R.id.buttonmul);
+ buttonDivision = (Button) findViewById(R.id.buttondiv);
+ buttonC = (Button) findViewById(R.id.buttonC);
+ buttonEqual = (Button) findViewById(R.id.buttoneql);
+ calciEditText = (EditText) findViewById(R.id.edt1);
+ button1.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "1");
+ }
+ });
+ button2.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "2");
+ }
+ });
+ button3.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "3");
+ }
+ });
+ button4.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "4");
+ }
+ });
+ button5.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "5");
+ }
+ });
+ button6.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "6");
+ }
+ });
+ button7.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "7");
+ }
+ });
+ button8.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "8");
+ }
+ });
+ button9.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "9");
+ }
+ });
+ button0.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + "0");
+ }
+ });
+ buttonAdd.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ if (calciEditText == null) {
+ calciEditText.setText("");
+ } else {
+ mValueOne = Float.parseFloat(calciEditText.getText() + "");
+ cAddition = true;
+ calciEditText.setText(null);
+ }
+ }
+ });
+ buttonSub.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ mValueOne = Float.parseFloat(calciEditText.getText() + "");
+ cSubtract = true;
+ calciEditText.setText(null);
+ }
+ });
+ buttonMul.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ mValueOne = Float.parseFloat(calciEditText.getText() + "");
+ cMultiplication = true;
+ calciEditText.setText(null);
+ }
+ });
+ buttonDivision.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ mValueOne = Float.parseFloat(calciEditText.getText() + "");
+ cDivision = true;
+ calciEditText.setText(null);
+ }
+ });
+ buttonEqual.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ mValueTwo = Float.parseFloat(calciEditText.getText() + "");
+ if (cAddition == true) {
+ calciEditText.setText(mValueOne + mValueTwo + "");
+ cAddition = false;
+ }
+ if (cSubtract == true) {
+ calciEditText.setText(mValueOne - mValueTwo + "");
+ cSubtract = false;
+ }
+ if (cMultiplication == true) {
+ calciEditText.setText(mValueOne * mValueTwo + "");
+ cMultiplication = false;
+ }
+ if (cDivision == true) {
+ calciEditText.setText(mValueOne / mValueTwo + "");
+ cDivision = false;
+ }
+ }
+ });
+ buttonC.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText("");
+ }
+ });
+ button10.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ calciEditText.setText(calciEditText.getText() + ".");
+ }
+ });
+ }
+}
+EXP 6. Create an android UI that consists of Different Departments of a company namely 
+Production, Finance, Marketing and HR. If the user clicks on any department it should show 
+details of that department. Use indents.
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <Spinner
+ android:id="@+id/spinner1"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_weight="1" />
+</LinearLayout>
+MainActivity.java
+package com.example.exp6;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ String[] department = {"Select One", "Production", "Finance", "Marketing", "HR"};
+ Spinner mySpinner = (Spinner) findViewById(R.id.spinner1);
+ ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this,
+ android.R.layout.simple_spinner_dropdown_item,department);
+ mySpinner.setAdapter(myAdapter);
+ mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+ @Override
+ public void onItemSelected(AdapterView<?> adapterView, View view, int position, 
+long i) {
+ String selectedClass = adapterView.getItemAtPosition(position).toString();
+ if (selectedClass == "Production"){
+ Toast.makeText(MainActivity.this, "selected", Toast.LENGTH_LONG).show();
+ Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+ intent.putExtra("DepartmentIndex",selectedClass);
+ startActivity(intent);
+ }
+ else if(selectedClass == "Finance") {
+ Toast.makeText(MainActivity.this, "selected", Toast.LENGTH_LONG).show();
+ Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+ intent.putExtra("DepartmentIndex", selectedClass);
+ startActivity(intent);
+ }
+ else if(selectedClass == "Marketing") {
+ Toast.makeText(MainActivity.this, "selected", Toast.LENGTH_LONG).show();
+ Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+ intent.putExtra("DepartmentIndex", selectedClass);
+ startActivity(intent);
+ }
+ else if(selectedClass == "HR") {
+ Toast.makeText(MainActivity.this, "selected", Toast.LENGTH_LONG).show();
+ Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+ intent.putExtra("DepartmentIndex", selectedClass);
+ startActivity(intent);
+ }
+ }
+ @Override
+ public void onNothingSelected(AdapterView<?> adapterView) {
+ }
+ });
+ }
+}
+activity_second.xml
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout 
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".SecondActivity">
+ <TextView
+ android:id="@+id/textViewDesc"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:gravity="center_horizontal"
+ android:textColor="@color/purple_200"
+ android:textSize="30sp"
+ tools:ignore="MissingConstraints"
+ tools:layout_editor_absoluteX="165dp"
+ tools:layout_editor_absoluteY="187dp" />
+</android.support.constraint.ConstraintLayout>
+SecondActivity.java
+package com.example.exp6;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+public class SecondActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_second);
+ Bundle bundle = getIntent().getExtras();
+ if(bundle!=null){
+ String deptIndex = bundle.getString("DepartmentIndex");
+ setDepartmentInfo(deptIndex);
+ }
+ }
+ private void setDepartmentInfo(String i)
+ {
+ TextView textViewDesc = (TextView)findViewById(R.id.textViewDesc);
+ switch (i)
+ {
+ case "Production":
+ textViewDesc.setText("The production department is responsible for " +
+ "creating the finished products which the company needs to sell to earn" +
+ "a profit.");
+ break;
+ case "Finance":
+ textViewDesc.setText("Besides supervising the inflows and outflows of money");
+ case "Marketing":
+ textViewDesc.setText("It serves as the face of your company, " +
+ "coordinating and producing all materials representing the business.");
+ break;
+ case "HR":
+ textViewDesc.setText("Recruit candidates");
+ break;
+ }
+ }
+}
+AndroidManifest.xml
+Highlighted code in yellow colour should be mentioned in this xml file.
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+ package="com.example.exp6">
+ <application
+ android:allowBackup="true"
+ android:icon="@mipmap/ic_launcher"
+ android:label="@string/app_name"
+ android:roundIcon="@mipmap/ic_launcher_round"
+ android:supportsRtl="true"
+ android:theme="@style/Theme.Exp6">
+ <activity
+ android:name=".SecondActivity"
+ android:exported="false" />
+ <activity
+ android:name=".MainActivity"
+ android:exported="true">
+ <intent-filter>
+ <action android:name="android.intent.action.MAIN" />
+ <category android:name="android.intent.category.LAUNCHER" />
+ </intent-filter>
+ </activity>
+ </application>
+</manifest>
+EXP:NO;-7 Design an android application to display a list of items on the android 
+screen. If the user clicks any one of the list items a dialogue box should show that 
+the user has clicked that particular item (Use array adapters)
+Activity_Main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <ListView
+ android:id="@+id/lv"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent" />
+</LinearLayout>
+MainActivity.Java
+package com.example.exp7;
+import android.app.Dialog;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ String[] items = {"TV","BIKE","CAR"};
+ ListView listView;
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ listView = (ListView) findViewById(R.id.lv);
+ ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this,
+ android.R.layout.simple_list_item_1,items);
+ listView.setAdapter(myAdapter);
+ listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+ @Override
+ public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) 
+{
+ Toast.makeText(MainActivity.this, "selected", Toast.LENGTH_LONG).show();
+ Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+ intent.putExtra("details", items[position]);
+ startActivity(intent);
+ }
+ });
+ }
+}
+activity_main2.xml
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout 
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity2">
+ <TextView
+ android:id="@+id/textView1"
+ android:layout_width="250sp"
+ android:layout_height="75sp"
+ android:textSize="25sp"
+ tools:ignore="MissingConstraints"
+ tools:layout_editor_absoluteX="139dp"
+ tools:layout_editor_absoluteY="281dp" />
+</android.support.constraint.ConstraintLayout>
+MainActivity2.Java
+package com.example.exp7;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+public class MainActivity2 extends AppCompatActivity {
+ TextView textView, textView1;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main2);
+ Bundle bundle = getIntent().getExtras();
+ if(bundle!=null){
+ String val = bundle.getString("details");
+ if(val.equals("TV")) {
+ textView1 = (TextView) findViewById(R.id.textView1);
+ textView1.setText("LCD TV and LED TV");
+ }
+ else if(val.equals("BIKE")) {
+ textView1 = (TextView) findViewById(R.id.textView1);
+ textView1.setText("YAMAHA and HONDA");
+ }
+ else if(val.equals("CAR")) {
+ textView1 = (TextView) findViewById(R.id.textView1);
+ textView1.setText("KIA and FORD");
+ }
+ }
+ }
+}
+AndroidManifest.XML
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+ package="com.example.exp7">
+ <application
+ android:allowBackup="true"
+ android:icon="@mipmap/ic_launcher"
+ android:label="@string/app_name"
+ android:roundIcon="@mipmap/ic_launcher_round"
+ android:supportsRtl="true"
+ android:theme="@style/Theme.Exp7">
+ <activity
+ android:name=".MainActivity"
+ android:exported="true">
+ <intent-filter>
+ <action android:name="android.intent.action.MAIN" />
+ <category android:name="android.intent.category.LAUNCHER" />
+ </intent-filter>
+ </activity>
+ <activity
+ android:name=".MainActivity2"
+ android:theme="@style/Theme.AppCompat.Dialog.Alert"
+ android:exported="false"></activity>
+ </application>
+</manifest>
+Exp 8: Develop an android application to show some categories such as education, 
+entertainment, health, provisions etc., If the user clicks on any one of the items it should 
+show the sub categories of the category and if is again clicked it should the details of those 
+items. (Use indents and lists)
+example_menu.xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto">
+ 
+<item android:id="@+id/click"
+ android:title="Categories"
+ app:showAsAction="ifRoom"/>
+ <item android:id="@+id/item1"
+ android:title="Education Web Links"
+ app:showAsAction="never"/>
+ <item android:id="@+id/item2"
+ android:title="Entertainmnent"
+ app:showAsAction="never">
+ <menu>
+ <item android:id="@+id/subitem1"
+ android:title="Music Web Links"/>
+ <item android:id="@+id/subitem2"
+ android:title="Movie"/>
+ </menu>
+ </item>
+ <item android:id="@+id/item3"
+ android:title="Health"
+ app:showAsAction="never"/>
+ <item android:id="@+id/item4"
+ android:title="Provisions"
+ app:showAsAction="never"/>
+</menu>
+activity_main2.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity2">
+ <TextView
+ android:id="@+id/txtview"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginBottom="-102dp"
+ android:gravity="left"
+ android:textColor="@android:color/background_dark"
+ android:textStyle="bold" />
+ <TextView
+ android:id="@+id/txtview2"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_alignBottom="@+id/txtview"
+ android:layout_marginBottom="-39dp"
+ android:gravity="left"
+ android:textColor="@android:color/background_dark"
+ android:textStyle="bold" />
+</RelativeLayout>
+MainActivity2.java
+package com.example.exp8;
+import android.support.annotation.NonNull;
+import android.support.v4.text.HtmlCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
+import android.widget.CalendarView;
+public class MainActivity2 extends AppCompatActivity {
+ // Define the variable of TextView type;
+ TextView txtView, txtView1;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main2);
+ txtView = (TextView) findViewById(R.id.txtview);
+ txtView1 = (TextView) findViewById(R.id.txtview2);
+ String web = "<b>ALISON<b>&nbsp&nbsp<a href='https://alison.com/'>Open</a>";
+ String web1 = "<b>UDEMY<b>&nbsp&nbsp<a 
+href='https://www.udemy.com/'>Open</a>";
+ // movementMethod which traverses the links in the text buffer
+ txtView.setMovementMethod(LinkMovementMethod.getInstance());
+ txtView.setText(HtmlCompat.fromHtml(web, 0));
+ txtView1.setMovementMethod(LinkMovementMethod.getInstance());
+ txtView1.setText(HtmlCompat.fromHtml(web1, 0));
+ }
+}
+activity_main4.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity4">
+ <TextView
+ android:id="@+id/txtview"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_marginBottom="-102dp"
+ android:gravity="left"
+ android:textColor="@android:color/background_dark"
+ android:textStyle="bold" />
+ <TextView
+ android:id="@+id/txtview2"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:layout_alignBottom="@+id/txtview"
+ android:layout_marginBottom="-39dp"
+ android:gravity="left"
+ android:textColor="@android:color/background_dark"
+ android:textStyle="bold" />
+</RelativeLayout>
+MainActivity4.Java
+package com.example.exp8;
+import android.support.v4.text.HtmlCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
+public class MainActivity4 extends AppCompatActivity {
+ TextView txtView, txtView1;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main4);
+ txtView = (TextView) findViewById(R.id.txtview);
+ txtView1 = (TextView) findViewById(R.id.txtview2);
+ String web = "<b>Wynk<b>&nbsp&nbsp<a href='https://wynk.in/'>Open</a>";
+ String web1 = "<b>PRIME MUSIC<b>&nbsp&nbsp<a 
+href='https://music.amazon.in/'>Open</a>";
+ // movementMethod which traverses the links in the text buffer
+ txtView.setMovementMethod(LinkMovementMethod.getInstance());
+ txtView.setText(HtmlCompat.fromHtml(web, 0));
+ txtView1.setMovementMethod(LinkMovementMethod.getInstance());
+ txtView1.setText(HtmlCompat.fromHtml(web1, 0));
+ }
+}
+After Creating two activities [MainActivity2 & MainActivity4] pages, need to add code in 
+MainActivity.Java
+MainActivity.Java
+package com.example.exp8;
+import android.app.assist.AssistContent;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ }
+ @Override
+ public boolean onCreateOptionsMenu(Menu menu) {
+ MenuInflater inflater = getMenuInflater();
+ inflater.inflate(R.menu.example_menu, menu);
+ return true;
+ }
+ @Override
+ public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+ int id= item.getItemId();
+ if(id==R.id.item1)
+ {
+ Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+ startActivity(intent);
+ finish();
+ return true;
+ }
+ if(id==R.id.subitem1)
+ {
+ Intent intent = new Intent(MainActivity.this, MainActivity4.class);
+ startActivity(intent);
+ finish();
+ return true;
+ }
+ return super.onOptionsItemSelected(item);
+ }
+}
+Exp:11 Develop an android application to demonstrate the database
+connectivitywith the SQLite database to post and retrieve data through the User 
+Interface (Example: Student mark list processing, Email Registration and
+Login,Products and sales)
+Activity_Main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent" android:orientation="vertical"
+tools:context=".MainActivity">
+<EditText
+android:id="@+id/idEdtStudName"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="10dp"
+android:hint="Enter Student Name" />
+<EditText
+android:id="@+id/idEdtStudRollNumber"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="10dp"
+android:hint="Enter Roll Number" />
+<EditText
+android:id="@+id/idEdtAddress"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="10dp"
+android:hint="Enter Address" />
+<EditText
+android:id="@+id/idEdtStudBranch"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="10dp"
+android:hint="Enter Branch" />
+<!--button for adding new course-->
+<Button
+android:id="@+id/idBtnAddStudent"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="10dp"
+android:text="Add Details"
+android:textAllCaps="false" />
+</LinearLayout>
+MainActivity.Java
+package com.example.exp11;
+import android.support.v7.app.AppCompatActivity;import
+android.os.Bundle;
+import android.view.View; import 
+android.widget.Button; import 
+android.widget.EditText;import
+android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+private EditText studentName, studentRoll, studentAddress,
+studentBranch;
+private Button addStudentDetails;private 
+DBHandler dbHandler; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+studentName = findViewById(R.id.idEdtStudName); studentRoll = 
+findViewById(R.id.idEdtStudRollNumber); studentAddress = 
+findViewById(R.id.idEdtAddress); studentBranch = 
+findViewById(R.id.idEdtStudBranch); addStudentDetails =
+findViewById(R.id.idBtnAddStudent);
+dbHandler = new DBHandler(MainActivity.this);
+addStudentDetails.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View view) {
+String Name = studentName.getText().toString(); String 
+RollNumber = studentRoll.getText().toString();String Address = 
+studentAddress.getText().toString();String Branch =
+studentBranch.getText().toString();
+if (Name.isEmpty() && RollNumber.isEmpty() &&
+Address.isEmpty() && Branch.isEmpty()) {
+Toast.makeText(MainActivity.this, "Please enter all thedata..",
+Toast.LENGTH_SHORT).show();
+return;
+}
+dbHandler.addNewStudent(Name, RollNumber, Address, Branch);
+Toast.makeText(MainActivity.this, "Details has beenadded.",
+Toast.LENGTH_SHORT).show();
+studentName.setText("");
+studentRoll.setText("");
+studentAddress.setText("");
+studentBranch.setText("");
+}
+});
+}
+}
+Exp:12 Demonstrate the usage of Sensors in android by developing proper
+application.
+STEP #1 AndroidManifest.XML
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.example.sensordemo">
+<uses-feature android:name="android.hardware.sensor.accelerometer"
+android:required="true"/>
+<uses-feature android:name="android.hardware.sensor.gyroscope"
+android:required="true"/>
+<application
+android:allowBackup="true"
+android:icon="@mipmap/ic_launcher"
+android:label="@string/app_name"
+android:roundIcon="@mipmap/ic_launcher_round"
+android:supportsRtl="true"
+android:theme="@style/Theme.SensorDemo">
+<activity
+android:name=".MainActivity"
+android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER"
+/>
+</intent-filter>
+</activity>
+</application>
+</manifest>
+Create TWO java class Accelerometer & Gyroscope
+STEP #2 Accelerometer.java
+package com.example.sensordemo;
+import android.content.Context; import 
+android.hardware.Sensor; import
+android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;import
+android.hardware.SensorManager;
+public class Accelerometer {
+private SensorManager sensoreManager;
+private Sensor sensor;
+private SensorEventListener sensorEventListener;
+public interface Listner{
+void onTranslation(float tx, float ty, float tz);
+}
+private Listner listner;
+public void setListner(Listner l){listner = l;
+}
+Accelerometer(Context context)
+{
+sensoreManager = (SensorManager)
+context.getSystemService(Context.SENSOR_SERVICE);
+sensor =
+sensoreManager.getDefaultSensor(sensor.TYPE_LINEAR_ACCELERATION);
+sensorEventListener = new SensorEventListener() {
+@Override
+public void onSensorChanged(SensorEvent sensorEvent) {
+if(listner!=null){
+listner.onTranslation(sensorEvent.values[0],sensorEvent.values[1],
+sensorEvent.values[2]);
+}
+}
+@Override
+public void onAccuracyChanged(Sensor sensor, int i) {
+}
+};
+}
+public void register(){ sensoreManager.registerListener(sensorEventListener, sensor,
+sensoreManager.SENSOR_DELAY_NORMAL);
+}
+public void unregister(){
+sensoreManager.unregisterListener(sensorEventListener);
+}
+}
+STEP #3 - Gyroscope.java
+package com.example.sensordemo;
+import android.content.Context; import 
+android.hardware.Sensor; import
+android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;import
+android.hardware.SensorManager;
+public class Gyroscope { public
+interface Listerner
+{
+void onRotaion(float rx, float ry, float rz);
+}
+private Listerner listerner;
+public void setListerner(Listerner l){listerner = l;
+}
+private SensorManager sensorManager;
+private Sensor sensor;
+private SensorEventListener sensorEventListener;
+Gyroscope(Context context)
+{
+sensorManager = (SensorManager)
+context.getSystemService(Context.SENSOR_SERVICE);
+sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+sensorEventListener = new SensorEventListener() {
+@Override
+public void onSensorChanged(SensorEvent sensorEvent) {
+if(listerner!=null)
+{
+listerner.onRotaion(sensorEvent.values[0],sensorEvent.values[1],
+sensorEvent.values[2]);
+}
+}
+@Override
+public void onAccuracyChanged(Sensor sensor, int i) {
+}
+};
+}
+public void register()
+{
+sensorManager.registerListener(sensorEventListener, sensor,
+sensorManager.SENSOR_DELAY_NORMAL);
+}
+public void unRegister()
+{
+sensorManager.unregisterListener(sensorEventListener);
+}
+}
+STEP #4 - MainActivity.java
+package com.example.sensordemo;
+import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+public class MainActivity extends AppCompatActivity {private
+Accelerometer accelerometer;
+private Gyroscope gyroscope;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+accelerometer = new Accelerometer(this);
+gyroscope = new Gyroscope(this);
+accelerometer.setListner(new Accelerometer.Listner() {
+@Override
+public void onTranslation(float tx, float ty, float tz) {if(tx>1.0f)
+{
+getWindow().getDecorView().setBackgroundColor(Color.RED);
+}
+else if(tx < -1.0f)
+{
+getWindow().getDecorView().setBackgroundColor(Color.BLUE);
+}
+}
+});
+gyroscope.setListerner(new Gyroscope.Listerner() {
+@Override
+public void onRotaion(float rx, float ry, float rz) {if(rz>1.0f)
+{
+getWindow().getDecorView().setBackgroundColor(Color.GREEN);
+}
+else if(rz < -1.0f)
+{
+getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
+}
+}
+});
+}
+@Override
+protected void onResume() {
+super.onResume();
+accelerometer.register();
+gyroscope.register();
+}
+@Override
+protected void onPause() {
+super.onPause();
+accelerometer.unregister();
+gyroscope.unRegister();
+}
